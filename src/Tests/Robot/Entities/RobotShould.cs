@@ -67,21 +67,45 @@ namespace Tests.Robot.Entities
         [Fact]
         public void RobotTester()
         {
-            var servo = Servo.Builder
-                .WithName("TestServo")
+            var baseServo = Servo.Builder
+                .WithName("Base")
                 .WithMinimumAngle(0)
                 .WithMaximumAngle(180)
                 .WithServoId(1)
                 .Build();
 
+            var shoulderServo = Servo.Builder
+                .WithName("Shoulder")
+                .WithMinimumAngle(0)
+                .WithMaximumAngle(180)
+                .WithServoId(2)
+                .Build();
+
+            var elbowServo = Servo.Builder
+                .WithName("Elbow")
+                .WithMinimumAngle(0)
+                .WithMaximumAngle(180)
+                .WithServoId(3)
+                .Build();
+
+            var gripperServo = Servo.Builder
+                .WithName("Gripper")
+                .WithMinimumAngle(0)
+                .WithMaximumAngle(180)
+                .WithServoId(4)
+                .Build();
+
             var robot = Domain.Robot.Entities.Robot.Builder
                 .WithCommunicationService(_communicationService)
-                .WithServo(servo)
+                .WithServo(baseServo)
+                .WithServo(shoulderServo)
+                .WithServo(elbowServo)
+                .WithServo(gripperServo)
                 .Build();
 
             robot.MoveServo(1, 30);
 
-            robot.Servos.FirstOrDefault(x => x.ServoId.Equals(servo.ServoId))
+            robot.Servos.FirstOrDefault(x => x.ServoId.Equals(baseServo.ServoId))
                 .CurrentAngle
                 .Should()
                 .Be(30);
