@@ -5,6 +5,7 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -61,6 +62,29 @@ namespace Tests.Robot.Entities
                 .Build();
 
             robot.Servos.Should().NotBeNullOrEmpty().And.HaveCount(1);
+        }
+
+        [Fact]
+        public void RobotTester()
+        {
+            var servo = Servo.Builder
+                .WithName("TestServo")
+                .WithMinimumAngle(0)
+                .WithMaximumAngle(180)
+                .WithServoId(1)
+                .Build();
+
+            var robot = Domain.Robot.Entities.Robot.Builder
+                .WithCommunicationService(_communicationService)
+                .WithServo(servo)
+                .Build();
+
+            robot.MoveServo(1, 30);
+
+            robot.Servos.FirstOrDefault(x => x.ServoId.Equals(servo.ServoId))
+                .CurrentAngle
+                .Should()
+                .Be(30);
         }
     }
 }

@@ -15,12 +15,21 @@ namespace Domain.Robot.Entities
 
         public int CurrentAngle { get; private set; }
 
+        public int NewAngle { get; private set; }
+
         public string Name { get; private set; }
 
-        public void SetAngle(int angle)
+        public void SetNewAngle(int angle)
         {
-            throw new NotImplementedException();
+            if (angle < MinimumAngle || angle > MaximumAngle)
+                throw new InvalidOperationException($"Angle must be between {MinimumAngle} and {MaximumAngle}");
+
+            if (angle == CurrentAngle) return;
+
+            NewAngle = angle;
         }
+
+        public void ServoHasMoved() => CurrentAngle = NewAngle;
 
         public static ServoBuilder Builder => new ServoBuilder ();
 

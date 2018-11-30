@@ -12,6 +12,8 @@
 
         string Name { get; }
 
-        void SetAngle(int angle);
+        void SetNewAngle(int angle);
+
+        void ServoHasMoved();
     }
 }

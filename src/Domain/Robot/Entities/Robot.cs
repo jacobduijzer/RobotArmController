@@ -23,6 +23,16 @@ namespace Domain.Robot.Entities
         {
             if (!Servos.Any(x => x.ServoId.Equals(servoId)))
                 throw new InvalidOperationException($"Servo with id {servoId} does not exist");
+            
+            // TODO: error handling
+            Servos.FirstOrDefault(x => x.ServoId.Equals(servoId))
+                .SetNewAngle(angle);
+
+            // TODO: handle communication
+            //_communicationService.SendData();
+
+            Servos.FirstOrDefault(x => x.ServoId.Equals(servoId))
+                .ServoHasMoved();
         }
 
         public class RobotBuilder
