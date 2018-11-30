@@ -14,6 +14,11 @@ namespace Domain.Robot.Entities
 
         private Robot() {  }
 
+        private Robot(ICommunicationService communicationService)
+        => _communicationService = communicationService;
+
+        private ICommunicationService _communicationService;
+
         public void MoveServo(int servoId, int angle)
         {
             if (!Servos.Any(x => x.ServoId.Equals(servoId)))
@@ -28,21 +33,26 @@ namespace Domain.Robot.Entities
 
             public RobotBuilder WithServo(IServo servo)
             {
-                // TODO: check for id's, should be unique
+                if (servo == null) throw new ArgumentNullException(nameof(servo));
+
+                if (_servos.Any(x => x.ServoId.Equals(servo.ServoId)))
+                    throw new InvalidOperationException($"Servo with id {servo.ServoId} already exists");
+
                 _servos.Add(servo);
                 return this;
             }
 
             public RobotBuilder WithCommunicationService(ICommunicationService communicationService)
             {
-                _communicationService = communicationService;
+                _communicationService = communicationService ?? throw new ArgumentNullException(nameof(communicationService));
                 return this;
             }
 
             public Robot Build()
             {
-                if (!_servos.Any())
-                    throw new InvalidOperationException("No servos are added");
+                if (!_servos.Any()) throw new InvalidOperationException("No servos are added");
+
+                if (_communicationService == null) throw new InvalidOperationException("No communication service added");
 
                 return new Robot
                 {
