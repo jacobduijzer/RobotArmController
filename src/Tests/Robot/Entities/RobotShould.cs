@@ -22,7 +22,7 @@ namespace Tests.Robot.Entities
             var mockCommunicationService = new Mock<ICommunicationService>();
             _communicationService = mockCommunicationService.Object;
 
-            _testServo = Servo.Builder.Build();
+            _testServo = Servo.Builder.WithServoId(0).Build();
         }
 
         [Fact]

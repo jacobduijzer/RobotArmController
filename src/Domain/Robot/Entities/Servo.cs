@@ -9,9 +9,9 @@ namespace Domain.Robot.Entities
     {
         public int ServoId { get; private set; }
 
-        public int MinimumAngle { get; private set; }
+        public int MinimumAngle { get; private set; } 
 
-        public int MaximumAngle { get; private set; }
+        public int MaximumAngle { get; private set; } 
 
         public int CurrentAngle { get; private set; }
 
@@ -37,11 +37,11 @@ namespace Domain.Robot.Entities
 
         public class ServoBuilder
         {
-            private int _servoId;
+            private int _servoId = -1;
 
-            private int _minimumAngle;
+            private int _minimumAngle = 0;
 
-            private int _maximumAngle;
+            private int _maximumAngle = 180;
 
             private int _currentAngle;
 
@@ -73,6 +73,8 @@ namespace Domain.Robot.Entities
 
             public Servo Build()
             {
+                if (_servoId < 0) throw new InvalidOperationException($"Servo ID {_servoId} is invalid");
+
                 return new Servo
                 {
                     ServoId = _servoId,
