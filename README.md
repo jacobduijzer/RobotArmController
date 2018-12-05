@@ -7,3 +7,7 @@ Some plans:
 
 - record, save and edit movements of multiple servo's
 - gcode
+
+# Configuration
+
+The servos should be configured in the Arduino sketch before starting the .NET RobotArmController.

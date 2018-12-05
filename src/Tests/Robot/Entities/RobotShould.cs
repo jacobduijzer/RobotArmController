@@ -33,7 +33,7 @@ namespace Tests.Robot.Entities
                 .WithCommunicationService(_communicationService)
                 .Build();
 
-            robot.Should().BeOfType<Domain.Robot.Entities.Robot>();
+            robot.Should().BeOfType<Domain.Robot.Entities.Robot>();            
         }
 
         [Fact]

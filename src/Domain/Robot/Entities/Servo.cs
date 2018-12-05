@@ -1,7 +1,5 @@
-﻿using Domain.Robot.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Domain.Robot.Contracts;
 
 namespace Domain.Robot.Entities
 {
@@ -11,7 +9,9 @@ namespace Domain.Robot.Entities
 
         public int MinimumAngle { get; private set; } 
 
-        public int MaximumAngle { get; private set; } 
+        public int MaximumAngle { get; private set; }
+
+        public int StartAngle { get; private set; }
 
         public int CurrentAngle { get; private set; }
 
@@ -23,9 +23,9 @@ namespace Domain.Robot.Entities
         {
             if (angle < MinimumAngle || angle > MaximumAngle)
                 throw new InvalidOperationException($"Angle must be between {MinimumAngle} and {MaximumAngle}");
-
+            
             if (angle == CurrentAngle) return;
-
+            
             NewAngle = angle;
         }
 
@@ -43,7 +43,7 @@ namespace Domain.Robot.Entities
 
             private int _maximumAngle = 180;
 
-            private int _currentAngle;
+            private int _startAngle = 0;
 
             private string _name;
 
@@ -65,6 +65,12 @@ namespace Domain.Robot.Entities
                 return this;
             }
 
+            public ServoBuilder WithStartAngle(int startAngle)
+            {
+                _startAngle = startAngle;
+                return this;
+            }
+
             public ServoBuilder WithName(string name)
             {
                 _name = name;
@@ -73,13 +79,21 @@ namespace Domain.Robot.Entities
 
             public Servo Build()
             {
-                if (_servoId < 0) throw new InvalidOperationException($"Servo ID {_servoId} is invalid");
+                if (_servoId < 0)
+                    throw new InvalidOperationException($"Servo ID {_servoId} is invalid");
 
+                if(_minimumAngle >= _maximumAngle)
+                    throw new InvalidOperationException("The minimum angle must be smaller than the maximum angle");
+
+                if (_startAngle < _minimumAngle || _startAngle > _maximumAngle)
+                    throw new InvalidOperationException($"Start angle must be between {_minimumAngle} and {_maximumAngle}");
+                               
                 return new Servo
                 {
                     ServoId = _servoId,
                     MinimumAngle = _minimumAngle,
                     MaximumAngle = _maximumAngle,
+                    StartAngle = _startAngle,
                     Name = _name
                 };
             }

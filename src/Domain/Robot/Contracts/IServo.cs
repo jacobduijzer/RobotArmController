@@ -8,6 +8,8 @@
 
         int MaximumAngle { get; }
 
+        int StartAngle { get; }
+
         int CurrentAngle { get; }
 
         string Name { get; }

@@ -19,6 +19,15 @@ namespace Domain.Robot.Entities
 
         private ICommunicationService _communicationService;
 
+        public void Initialize()
+        {
+            foreach(var servo in Servos)
+            {
+                // TODO
+                //_communicationService.SendData(servo.StartAngle.ToString());
+            }
+        }
+
         public void MoveServo(int servoId, int angle)
         {
             if (!Servos.Any(x => x.ServoId.Equals(servoId)))
