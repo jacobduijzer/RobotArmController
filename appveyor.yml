@@ -1,0 +1,12 @@
+before_build:
+ - nuget restore src/C#/RobotArmController.sln
+build_script:
+ - msbuild /verbosity:quiet src/C#/RobotArmController.sln
+test_script:
+ - OpenCover.Console.exe -register:user -target:"xunit.console.x86.exe" -targetargs:".\Tests\bin\Debug\netcoreapp2.1\Tests.dll -noshadow"  -output:"coverage.xml"
+after_test:
+  - ps: |
+      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+      bash codecov.sh -f "coverage.xml" -t YourUploadToken
+
