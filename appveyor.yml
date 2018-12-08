@@ -3,7 +3,7 @@ before_build:
 build_script:
  -  dotnet build src/C#/RobotArmController.sln
 test_script:
- - OpenCover.Console.exe -register:user -target:"xunit.console.x86.exe" -targetargs:".\src\C#\Tests\bin\Debug\netcoreapp2.1\Tests.dll -noshadow"  -output:"coverage.xml"
+ - OpenCover.Console.exe -register:user -target:"xunit.console.x86.exe" -targetargs:".\src\C#\Tests\bin\Debug\netcoreapp2.1\Tests.dll" -noshadow -output:"coverage.xml"
 after_test:
   - ps: |
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
