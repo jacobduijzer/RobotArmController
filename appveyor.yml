@@ -1,10 +1,10 @@
 before_build:
- - nuget restore src/C#/RobotArmController.sln
+ - nuget restore src/dotnet/RobotArmController.sln
  - choco install opencover.portable
  - choco install codecov
 build_script:
- -  dotnet build src/C#/RobotArmController.sln
+ -  dotnet build src/dotnet/RobotArmController.sln
 test_script:
- - dotnet test --no-build src/C#/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.xml
- - codecov -f "src/C#/Tests/coverage.xml"
+ - dotnet test --no-build src/dotnet/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.xml
+ - codecov -f "src/dotnet/Tests/coverage.xml"
 
