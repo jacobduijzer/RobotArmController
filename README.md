@@ -1,4 +1,4 @@
-https://ci.appveyor.com/api/projects/status/qkc463xscrkpd1sh/branch/master?svg=true
+[![Build status](https://ci.appveyor.com/api/projects/status/qkc463xscrkpd1sh/branch/master?svg=true)](https://ci.appveyor.com/project/jacobduijzer/robotarmcontroller/branch/master)
 
 # RobotArmController
 
