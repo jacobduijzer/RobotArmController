@@ -1,3 +1,5 @@
+https://ci.appveyor.com/api/projects/status/qkc463xscrkpd1sh/branch/master?svg=true
+
 # RobotArmController
 
 First attempt to create a cross platform library for a robot arm with multiple servo's. Could be used to control
