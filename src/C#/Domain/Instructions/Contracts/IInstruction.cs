@@ -6,14 +6,14 @@ namespace Domain.Instructions.Contracts
     {
         string Name { get; }
 
-        IEnumerable<string> Lines { get; }
+        IList<string> Lines { get; }
 
-        void CreateLine();
+        void AddLine(string code);
 
-        void UpdateLine();
+        void InsertLine(int lineNumber, string code);
 
-        void ReadLine();
+        void UpdateLine(int lineNumber, string code);        
 
-        void DeleteLine();
+        void DeleteLine(int lineNumber);
     }
 }

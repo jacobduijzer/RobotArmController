@@ -8,37 +8,44 @@ namespace Domain.Instructions.Entities
     {
         public string Name { get; private set; }
 
-        public IEnumerable<string> Lines { get; private set; }
+        public IList<string> Lines { get; private set; }
                
         private Instruction()
         {
             Lines = new List<string>();
         }
 
-        public void CreateLine()
+        public void AddLine(string code) => 
+            Lines.Add(code);
+
+        public void InsertLine(int lineNumber, string code)
         {
-            throw new System.NotImplementedException();
+            if (lineNumber >= Lines.Count)
+                throw new InvalidOperationException($"Can not insert line, there is no line {lineNumber}!");
+
+            Lines.Insert(lineNumber, code);
         }
 
-        public void DeleteLine()
+        public void UpdateLine(int lineNumber, string code)
         {
-            throw new System.NotImplementedException();
-        }
+            if (lineNumber >= Lines.Count)
+                throw new InvalidOperationException($"Can not update line, there is no line {lineNumber}!");
 
-        public void ReadLine()
-        {
-            throw new System.NotImplementedException();
-        }
+            Lines[lineNumber] = code;
+        } 
 
-        public void UpdateLine()
+        public void DeleteLine(int lineNumber)
         {
-            throw new System.NotImplementedException();
-        }
+            if (lineNumber >= Lines.Count)
+                throw new InvalidOperationException($"Can not delete line, there is no line {lineNumber}!");
+
+            Lines.RemoveAt(lineNumber);
+        }        
 
         #region Builder
 
         public static InstructionBuilder Builder() => new InstructionBuilder();
-
+        
         public class InstructionBuilder
         {
             private string _name;
@@ -51,7 +58,6 @@ namespace Domain.Instructions.Entities
 
             public Instruction Build()
             {
-
                 return new Instruction()
                 {
                     Name = _name ?? throw new ArgumentNullException("Name")
