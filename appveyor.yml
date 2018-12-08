@@ -5,6 +5,6 @@ before_build:
 build_script:
  -  dotnet build src/C#/RobotArmController.sln
 test_script:
- - OpenCover.Console.Exe -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test ./src/C#/Tests/Tests.csproj" -oldstyle -register:user -output:"coverage.xml"
+ - dotnet test --no-build src/C#/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
  - codecov -f "coverage.xml"
 
