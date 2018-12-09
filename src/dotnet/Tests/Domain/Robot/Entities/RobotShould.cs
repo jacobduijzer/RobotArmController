@@ -17,9 +17,6 @@ namespace Tests.Domain.Robot.Entities
 
         public RobotShould()
         {
-            //var mockCommunicationService = new Mock<ICommunicationService>();
-            //_communicationService = mockCommunicationService.Object;
-
             _testServo = Servo.Builder().WithServoId(0).Build();
         }
 

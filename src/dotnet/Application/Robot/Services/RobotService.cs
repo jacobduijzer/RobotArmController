@@ -1,10 +1,11 @@
-﻿using Domain.Communication.Contracts;
+﻿using System;
+using Domain.Communication.Contracts;
 using Domain.Program.Contracts;
 using Domain.Robot.Contracts;
 
 namespace Application.Robot.Services
 {
-    public class RobotService
+    public class RobotService : IRobotService
     {
         private readonly ICommunicationService _communicationService;
         private readonly IInstructionsRepository _instructionsRepository;
@@ -17,6 +18,13 @@ namespace Application.Robot.Services
             _communicationService = communicationService;
             _instructionsRepository = instructionsRepository;
             _robot = robot;
+        }
+
+        public bool Initialize()
+        {
+            if (_communicationService == null) throw new InvalidOperationException("No communication service is provided");
+
+            return _communicationService.Connect();
         }
 
         //public void MoveServo(int servoId, int angle)
