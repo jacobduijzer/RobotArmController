@@ -20,12 +20,7 @@ namespace Application.Robot.Services
             _robot = robot ?? throw new ArgumentNullException(nameof(robot));
         }
 
-        public bool Initialize()
-        {
-            if (_communicationService == null) throw new InvalidOperationException("No communication service is provided");
-
-            return _communicationService.Connect();
-        }
+        public bool Initialize() => _communicationService.Connect();
 
         //public void MoveServo(int servoId, int angle)
         //{

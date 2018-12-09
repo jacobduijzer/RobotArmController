@@ -22,6 +22,8 @@ namespace Tests.Application.Robot.Services
         public RobotServiceShould()
         {
             _mockCommunicationService = new Mock<ICommunicationService>();
+            _mockCommunicationService.Setup(x => x.Connect()).Returns(true).Verifiable();
+
             _mockInstructionsRepository = new Mock<IInstructionsRepository>();
 
             _robot = RobotObject.Builder()
@@ -59,5 +61,16 @@ namespace Tests.Application.Robot.Services
                                                 null))
             .Should().Throw<ArgumentNullException>()
                         .WithMessage("*robot*");
+
+        [Fact]
+        public void OpenSerialPortOnInitialize()
+        {
+            var robotService = new RobotService(_mockCommunicationService.Object,
+                                _mockInstructionsRepository.Object,
+                                _robot);
+            robotService.Initialize().Should().BeTrue();
+            _mockCommunicationService.Verify(x => x.Connect(), Times.Once);
+        }
+
     }
 }

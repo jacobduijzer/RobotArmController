@@ -12,12 +12,7 @@ namespace TestConsole
     {
         static async Task Main(string[] args)
         {
-            var baseServo = Servo.Builder()
-                .WithName("Base")
-                .WithMinimumAngle(0)
-                .WithMaximumAngle(180)
-                .WithServoId(1)
-                .Build();
+            #region Communication
 
             var serialConnection = SerialConnection.Builder()
                                                 .WithPortName("COM4")
@@ -25,19 +20,39 @@ namespace TestConsole
                                                 .WithLogger(new ConsoleLogger())
                                                 .Build();
 
+            var communicationService = new CommunicationService(serialConnection);
+
+            #endregion
+
+            #region Instructions
+
             var instructionsRepository = new InstructionsRepository();
 
-            var communicationService = new CommunicationService(serialConnection);
+            #endregion
+            
+            #region Robot
+
+            var baseServo = Servo.Builder()
+                .WithName("Base")
+                .WithMinimumAngle(0)
+                .WithMaximumAngle(180)
+                .WithStartAngle(90)
+                .WithServoId(1)
+                .Build();
 
             var robot = Robot.Builder()
                 .WithServo(baseServo)
                 .Build();
 
+            #endregion
+
             var robotService = new RobotService(communicationService, 
                                                 instructionsRepository,
                                                 robot);
 
-            //robotService.Initialize();
+            robotService.Initialize();
+
+            //robotService.LoadInstructions("test01");
             //robot.MoveServo(baseServo.ServoId, baseServo.MaximumAngle);
 
             //await Task.Delay(1000);
