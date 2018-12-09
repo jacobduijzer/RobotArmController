@@ -1,9 +1,15 @@
-﻿namespace Domain.Program.Contracts
+﻿using Domain.Instructions.Contracts;
+
+namespace Domain.Program.Contracts
 {
     public interface IInstructionsRepository
     {
-        string GetInstructions(string name);
+        IInstructions GetByName(string name);
 
-        void UpdateInstruction(string name, int lineNumber, string instruction);
+        void Create(IInstructions instructions);
+
+        void Update(IInstructions instructions);
+
+        void Delete(IInstructions instructions);
     }
 }

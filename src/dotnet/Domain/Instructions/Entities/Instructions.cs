@@ -4,19 +4,22 @@ using Domain.Instructions.Contracts;
 
 namespace Domain.Instructions.Entities
 {
-    public class Instruction : IInstruction
+    public class Instructions : IInstructions
     {
         public string Name { get; private set; }
 
         public IList<string> Lines { get; private set; }
                
-        private Instruction()
+        private Instructions()
         {
             Lines = new List<string>();
         }
 
-        public void AddLine(string code) => 
+        public IInstructions AddLine(string code)
+        {
             Lines.Add(code);
+            return this;
+        }
 
         public void InsertLine(int lineNumber, string code)
         {
@@ -44,21 +47,21 @@ namespace Domain.Instructions.Entities
 
         #region Builder
 
-        public static InstructionBuilder Builder() => new InstructionBuilder();
+        public static InstructionsBuilder Builder() => new InstructionsBuilder();
         
-        public class InstructionBuilder
+        public class InstructionsBuilder
         {
             private string _name;
 
-            public InstructionBuilder WithName(string name)
+            public InstructionsBuilder WithName(string name)
             {
                 _name = name;
                 return this;
             }
 
-            public Instruction Build()
+            public Instructions Build()
             {
-                return new Instruction()
+                return new Instructions()
                 {
                     Name = _name ?? throw new ArgumentNullException("Name")
                 };

@@ -2,13 +2,13 @@
 
 namespace Domain.Instructions.Contracts
 {
-    public interface IInstruction
+    public interface IInstructions
     {
         string Name { get; }
 
         IList<string> Lines { get; }
 
-        void AddLine(string code);
+        IInstructions AddLine(string code);
 
         void InsertLine(int lineNumber, string code);
 

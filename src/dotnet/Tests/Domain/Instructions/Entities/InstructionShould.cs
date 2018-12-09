@@ -4,27 +4,29 @@ using Domain.Instructions.Entities;
 using FluentAssertions;
 using Xunit;
 
-namespace Tests.Domain.Instrionctions.Entities
+using InstructionsObject = Domain.Instructions.Entities.Instructions;
+
+namespace Tests.Domain.Instructions.Entities
 {
     public class InstructionShould
     {
-        private readonly IInstruction _instruction;
+        private readonly IInstructions _instruction;
 
         public InstructionShould()
         {
-            _instruction = Instruction.Builder().WithName("TestInstruction").Build();
-            _instruction.AddLine("TESTLINE01");
-            _instruction.AddLine("TESTLINE02");
+            _instruction = InstructionsObject.Builder().WithName("TestInstruction").Build();
+            _instruction.AddLine("TESTLINE01")
+                        .AddLine("TESTLINE02");
         }
 
         [Fact]
         public void Build() =>
-            Instruction.Builder().WithName("Test").Build()
-                .Should().BeOfType<Instruction>();
+            InstructionsObject.Builder().WithName("Test").Build()
+                .Should().BeOfType<InstructionsObject>();
 
         [Fact]
         public void BuildWithName() =>
-            Instruction.Builder().WithName("GrabMarbles").Build().Name
+            InstructionsObject.Builder().WithName("GrabMarbles").Build().Name
             .Should().Be("GrabMarbles");
 
         [Fact]
@@ -51,10 +53,10 @@ namespace Tests.Domain.Instrionctions.Entities
         [InlineData(30)]
         public void ThrowWhenInsertingOnNonExistingLine(int lineNumber)
         {
-            var instructionSet = Instruction.Builder().WithName("GrabMarbles").Build();
-            instructionSet.AddLine("TESTLINE01");
-            instructionSet.AddLine("TESTLINE02");
-            instructionSet.AddLine("TESTLINE03");
+            var instructionSet = InstructionsObject.Builder().WithName("GrabMarbles").Build();
+            instructionSet.AddLine("TESTLINE01")
+                            .AddLine("TESTLINE02")
+                            .AddLine("TESTLINE03");
 
             new Action(() => instructionSet.InsertLine(lineNumber, "test"))
             .Should()
@@ -76,10 +78,10 @@ namespace Tests.Domain.Instrionctions.Entities
         [InlineData(30)]
         public void ThrowWhenUpdatingNonExistingLine(int lineNumber)
         {
-            var instructionSet = Instruction.Builder().WithName("GrabMarbles").Build();
-            instructionSet.AddLine("TESTLINE01");
-            instructionSet.AddLine("TESTLINE02");
-            instructionSet.AddLine("TESTLINE03");
+            var instructionSet = InstructionsObject.Builder().WithName("GrabMarbles").Build();
+            instructionSet.AddLine("TESTLINE01")
+                            .AddLine("TESTLINE02")
+                            .AddLine("TESTLINE03");
 
             new Action(() => instructionSet.UpdateLine(lineNumber, "test"))
             .Should()
@@ -90,10 +92,10 @@ namespace Tests.Domain.Instrionctions.Entities
         [Fact]
         public void DeleteLineAtPostion()
         {
-            var instructionSet = Instruction.Builder().WithName("GrabMarbles").Build();
-            instructionSet.AddLine("TESTLINE01");
-            instructionSet.AddLine("TESTLINE02");
-            instructionSet.AddLine("TESTLINE03");
+            var instructionSet = InstructionsObject.Builder().WithName("GrabMarbles").Build();
+            instructionSet.AddLine("TESTLINE01")
+                            .AddLine("TESTLINE02")
+                            .AddLine("TESTLINE03");
 
             instructionSet.DeleteLine(1);
             instructionSet.Lines.Count.Should().Be(2);
@@ -106,10 +108,10 @@ namespace Tests.Domain.Instrionctions.Entities
         [InlineData(30)]
         public void ThrowWhenDeletingNonExistingLine(int lineNumber)
         {
-            var instructionSet = Instruction.Builder().WithName("GrabMarbles").Build();
-            instructionSet.AddLine("TESTLINE01");
-            instructionSet.AddLine("TESTLINE02");
-            instructionSet.AddLine("TESTLINE03");
+            var instructionSet = InstructionsObject.Builder().WithName("GrabMarbles").Build();
+            instructionSet.AddLine("TESTLINE01")
+                            .AddLine("TESTLINE02")
+                            .AddLine("TESTLINE03");
 
             new Action(() => instructionSet.DeleteLine(lineNumber))
             .Should()
