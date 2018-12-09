@@ -4,11 +4,11 @@ before_build:
  - choco install codecov
  - choco install msbuild-sonarqube-runner
 build_script:
- - MSBuild.SonarQube.Runner.exe begin /k:"jacobduijzer_RobotArmController" /d:sonar.organization="jacobduijzer-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b" 
+ - MSBuild.SonarQube.Runner.exe begin /k:"jacobduijzer_RobotArmController" /d:sonar.cs.opencover.reportsPaths="src/dotnet/Tests/coverage.xml" /d:sonar.organization="jacobduijzer-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b" 
  - dotnet build src/dotnet/RobotArmController.sln
+ - dotnet test --no-build src/dotnet/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.xml
  - MSBuild.SonarQube.Runner.exe end /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b"
  
 test_script:
- - dotnet test --no-build src/dotnet/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.xml
  - codecov -f "src/dotnet/Tests/coverage.xml"
  
