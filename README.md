@@ -1,4 +1,6 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/qkc463xscrkpd1sh/branch/master?svg=true)](https://ci.appveyor.com/project/jacobduijzer/robotarmcontroller/branch/master) [![codecov](https://codecov.io/gh/jacobduijzer/RobotArmController/branch/master/graph/badge.svg)](https://codecov.io/gh/jacobduijzer/RobotArmController) https://sonarcloud.io/api/project_badges/measure?project=jacobduijzer_RobotArmController&metric=alert_status
+[![Build status](https://ci.appveyor.com/api/projects/status/qkc463xscrkpd1sh/branch/master?svg=true)](https://ci.appveyor.com/project/jacobduijzer/robotarmcontroller/branch/master) [![codecov](https://codecov.io/gh/jacobduijzer/RobotArmController/branch/master/graph/badge.svg)](https://codecov.io/gh/jacobduijzer/RobotArmController)[![Sonarcloud Status]https://sonarcloud.io/api/project_badges/measure?project=jacobduijzer_RobotArmController&metric=alert_status)](https://sonarcloud.io/dashboard?id=jacobduijzer_RobotArmController)
+
+
 # RobotArmController
 
 First attempt to create a cross platform library for a robot arm with multiple servo's. Could be used to control
