@@ -49,7 +49,7 @@ namespace Domain.Robot.Entities
 
         public class RobotBuilder
         {
-            private List<IServo> _servos = new List<IServo>();
+            private readonly List<IServo> _servos = new List<IServo>();
 
             private ICommunicationService _communicationService;
 

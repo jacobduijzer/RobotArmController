@@ -63,7 +63,7 @@ namespace Domain.Instructions.Entities
             {
                 return new Instructions()
                 {
-                    Name = _name ?? throw new ArgumentNullException("Name")
+                    Name = _name ?? throw new InvalidOperationException("The instruction set needs a unique name to identify the set.")
                 };
             }
         }
