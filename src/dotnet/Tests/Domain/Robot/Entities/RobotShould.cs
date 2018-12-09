@@ -13,58 +13,32 @@ namespace Tests.Domain.Robot.Entities
 {
     public class RobotShould
     {
-        private readonly ICommunicationService _communicationService;
-
         private readonly IServo _testServo;
 
         public RobotShould()
         {
-            var mockCommunicationService = new Mock<ICommunicationService>();
-            _communicationService = mockCommunicationService.Object;
+            //var mockCommunicationService = new Mock<ICommunicationService>();
+            //_communicationService = mockCommunicationService.Object;
 
             _testServo = Servo.Builder().WithServoId(0).Build();
         }
 
         [Fact]
-        public void Build()
-        {
-            var robot = RobotObject.Builder()
-                .WithServo(_testServo)
-                .WithCommunicationService(_communicationService)
-                .Build();
-
-            robot.Should().BeOfType<RobotObject>();            
-        }
+        public void Build() =>
+            RobotObject.Builder().WithServo(_testServo).Build()
+                       .Should().BeOfType<RobotObject>();
 
         [Fact]
-        public void ThrowWhenNoServosAreAdded()
-        {
-            Action act = () => RobotObject.Builder()
-            .WithCommunicationService(_communicationService)
-            .Build();
-
-            act.Should().Throw<InvalidOperationException>().WithMessage("No servos are added");
-        }
-
+        public void ThrowWhenNoServosAreAdded() =>
+            new Action(() => RobotObject.Builder().Build())
+            .Should().Throw<InvalidOperationException>().WithMessage("No servos are added");
+        
         [Fact]
-        public void ThrowWhenNoCommunicationServiceIsAdded()
-        {
-            Action act = () => RobotObject.Builder().WithServo(_testServo).Build();
-            act.Should().Throw<InvalidOperationException>().WithMessage("No communication service added");
-        }
+        public void ContainServos() =>
+            RobotObject.Builder().WithServo(_testServo).Build()
+            .Servos.Should().NotBeNullOrEmpty().And.HaveCount(1);
 
-        [Fact]
-        public void ContainServos()
-        {
-            var robot = RobotObject.Builder()
-                .WithCommunicationService(_communicationService)
-                .WithServo(_testServo)
-                .Build();
-
-            robot.Servos.Should().NotBeNullOrEmpty().And.HaveCount(1);
-        }
-
-        [Fact]
+        [Fact(Skip = "Logic moved to service, need to move and test")]
         public void RobotTester()
         {
             var baseServo = Servo.Builder()
@@ -96,14 +70,13 @@ namespace Tests.Domain.Robot.Entities
                 .Build();
 
             var robot = RobotObject.Builder()
-                .WithCommunicationService(_communicationService)
                 .WithServo(baseServo)
                 .WithServo(shoulderServo)
                 .WithServo(elbowServo)
                 .WithServo(gripperServo)
                 .Build();
 
-            robot.MoveServo(1, 30);
+            //robot.MoveServo(1, 30);
 
             robot.Servos.FirstOrDefault(x => x.ServoId.Equals(baseServo.ServoId))
                 .CurrentAngle

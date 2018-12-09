@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Communication.Services;
+using Application.Robot.Services;
 using Domain.Robot.Entities;
 using Infrastructure.Communication;
+using Infrastructure.Instructions;
 
 namespace TestConsole
 {
@@ -23,19 +25,24 @@ namespace TestConsole
                                                 .WithLogger(new ConsoleLogger())
                                                 .Build();
 
+            var instructionsRepository = new InstructionsRepository();
+
             var communicationService = new CommunicationService(serialConnection);
 
             var robot = Robot.Builder()
-                .WithCommunicationService(communicationService)
                 .WithServo(baseServo)
                 .Build();
 
-            robot.Initialize();
-            robot.MoveServo(baseServo.ServoId, baseServo.MaximumAngle);
+            var robotService = new RobotService(communicationService, 
+                                                instructionsRepository,
+                                                robot);
 
-            await Task.Delay(1000);
+            //robotService.Initialize();
+            //robot.MoveServo(baseServo.ServoId, baseServo.MaximumAngle);
 
-            robot.MoveServo(baseServo.ServoId, baseServo.MinimumAngle);
+            //await Task.Delay(1000);
+
+            //robot.MoveServo(baseServo.ServoId, baseServo.MinimumAngle);
 
             Console.ReadLine();
         }
