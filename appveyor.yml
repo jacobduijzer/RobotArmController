@@ -7,4 +7,5 @@ build_script:
 test_script:
  - dotnet test --no-build src/dotnet/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.xml
  - codecov -f "src/dotnet/Tests/coverage.xml"
+ - SonarScanner.MSBuild.exe begin /k:"jacobduijzer_RobotArmController" /d:sonar.organization="jacobduijzer-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b"
 
