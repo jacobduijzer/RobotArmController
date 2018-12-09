@@ -2,11 +2,11 @@ before_build:
  - nuget restore src/dotnet/RobotArmController.sln
  - choco install opencover.portable
  - choco install codecov
- - choco install sonarscanner-msbuild-netcoreapp2.0
+ - choco install msbuild-sonarqube-runner
 build_script:
- - SonarScanner.MSBuild.exe begin /k:"jacobduijzer_RobotArmController" /d:sonar.organization="jacobduijzer-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b" 
+ - MSBuild.SonarQube.Runner.exe begin /k:"jacobduijzer_RobotArmController" /d:sonar.organization="jacobduijzer-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b" 
  - dotnet build src/dotnet/RobotArmController.sln
- - SonarScanner.MSBuild.exe end /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b"
+ - MSBuild.SonarQube.Runner.exe end /d:sonar.login="95c40297cdfb781f45f6769cd94edffdddf8789b"
  
 test_script:
  - dotnet test --no-build src/dotnet/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.xml
