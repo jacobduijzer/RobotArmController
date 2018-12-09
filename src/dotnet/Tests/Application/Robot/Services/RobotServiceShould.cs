@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Application.Robot.Services;
 using Domain.Communication.Contracts;
 using Domain.Program.Contracts;
@@ -38,9 +36,28 @@ namespace Tests.Application.Robot.Services
                                 _robot)
             .Should().BeOfType<RobotService>();
 
-        //[Fact]
-        //public void ThrowWhenNoCommunicationServiceIsAdded() =>
-        //    new Action(() => RobotObject.Builder().WithServo(_testServo).Build())
-        //    .Should().Throw<InvalidOperationException>().WithMessage("No communication service added");
+        [Fact]
+        public void ThrowWhenCommunicationServiceIsNull() =>
+            new Action(() => new RobotService(null,
+                                                _mockInstructionsRepository.Object,
+                                                _robot))
+            .Should().Throw<ArgumentNullException>()
+                        .WithMessage("*communicationService*");
+
+        [Fact]
+        public void ThrowWhenInstructionsRepositoryIsNull() =>
+            new Action(() => new RobotService(_mockCommunicationService.Object,
+                                                null,
+                                                _robot))
+            .Should().Throw<ArgumentNullException>()
+                        .WithMessage("*instructionsRepository*");
+
+        [Fact]
+        public void ThrowWhenRobotIsNull() =>
+            new Action(() => new RobotService(_mockCommunicationService.Object,
+                                                _mockInstructionsRepository.Object,
+                                                null))
+            .Should().Throw<ArgumentNullException>()
+                        .WithMessage("*robot*");
     }
 }

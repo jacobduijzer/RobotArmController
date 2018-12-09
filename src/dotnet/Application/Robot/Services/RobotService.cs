@@ -14,10 +14,10 @@ namespace Application.Robot.Services
         public RobotService(ICommunicationService communicationService, 
                             IInstructionsRepository instructionsRepository,
                             IRobot robot)
-        {
-            _communicationService = communicationService;
-            _instructionsRepository = instructionsRepository;
-            _robot = robot;
+        {   
+            _communicationService = communicationService ?? throw new ArgumentNullException(nameof(communicationService));
+            _instructionsRepository = instructionsRepository ?? throw new ArgumentNullException(nameof(instructionsRepository));
+            _robot = robot ?? throw new ArgumentNullException(nameof(robot));
         }
 
         public bool Initialize()
