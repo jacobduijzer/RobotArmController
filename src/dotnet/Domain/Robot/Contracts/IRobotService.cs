@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain.Robot.Contracts
+﻿namespace Domain.Robot.Contracts
 {
     public interface IRobotService
     {
         bool Initialize();
+
+        bool LoadInstructions(string name);
 
         //void MoveServo(int servoId, int angle);
     }

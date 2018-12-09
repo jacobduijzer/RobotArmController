@@ -1,6 +1,8 @@
 ﻿using System;
 using Application.Robot.Services;
 using Domain.Communication.Contracts;
+using Domain.Instructions.Contracts;
+using Domain.Instructions.Entities;
 using Domain.Program.Contracts;
 using Domain.Robot.Contracts;
 using Domain.Robot.Entities;
@@ -19,12 +21,18 @@ namespace Tests.Application.Robot.Services
 
         private readonly IRobot _robot;
 
+        private readonly IInstructions _fakeInstructions;
+
         public RobotServiceShould()
         {
             _mockCommunicationService = new Mock<ICommunicationService>();
             _mockCommunicationService.Setup(x => x.Connect()).Returns(true).Verifiable();
 
+            _fakeInstructions = Instructions.Builder().WithName("TEST01").Build();
+
             _mockInstructionsRepository = new Mock<IInstructionsRepository>();
+            _mockInstructionsRepository.Setup(x => x.GetByName(It.IsAny<string>()))
+                .Returns(_fakeInstructions).Verifiable();           
 
             _robot = RobotObject.Builder()
                 .WithServo(Servo.Builder().WithName("TestServo").WithServoId(1).Build())
@@ -72,5 +80,14 @@ namespace Tests.Application.Robot.Services
             _mockCommunicationService.Verify(x => x.Connect(), Times.Once);
         }
 
+        [Fact]
+        public void LoadInstructions()
+        {
+            var robotService = new RobotService(_mockCommunicationService.Object,
+                                _mockInstructionsRepository.Object,
+                                _robot);
+            robotService.LoadInstructions("TEST01").Should().BeTrue();
+            _mockInstructionsRepository.Verify(x => x.GetByName(It.IsAny<string>()), Times.Once);
+        }
     }
 }
