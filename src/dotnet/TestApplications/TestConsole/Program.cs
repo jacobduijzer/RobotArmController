@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Communication.Services;
-using Application.Robot.Services;
+using Application.Robot;
 using Domain.Robot.Entities;
 using Infrastructure.Communication;
 using Infrastructure.Instructions;
@@ -46,11 +46,11 @@ namespace TestConsole
 
             #endregion
 
-            var robotService = new RobotService(communicationService, 
-                                                instructionsRepository,
-                                                robot);
+            var robotController = new RobotController(communicationService, 
+                                                        instructionsRepository,
+                                                        robot);
 
-            robotService.Initialize();
+            robotController.Initialize();
 
             //robotService.LoadInstructions("test01");
             //robot.MoveServo(baseServo.ServoId, baseServo.MaximumAngle);

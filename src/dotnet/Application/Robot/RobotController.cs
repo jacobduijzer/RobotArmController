@@ -4,9 +4,9 @@ using Domain.Instructions.Contracts;
 using Domain.Program.Contracts;
 using Domain.Robot.Contracts;
 
-namespace Application.Robot.Services
+namespace Application.Robot
 {
-    public class RobotService : IRobotService
+    public class RobotController : IRobotController
     {
         private readonly ICommunicationService _communicationService;
         private readonly IInstructionsRepository _instructionsRepository;
@@ -14,7 +14,7 @@ namespace Application.Robot.Services
 
         private IInstructions _instructions;
 
-        public RobotService(ICommunicationService communicationService, 
+        public RobotController(ICommunicationService communicationService, 
                             IInstructionsRepository instructionsRepository,
                             IRobot robot)
         {   

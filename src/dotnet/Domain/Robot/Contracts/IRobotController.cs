@@ -1,6 +1,6 @@
 ﻿namespace Domain.Robot.Contracts
 {
-    public interface IRobotService
+    public interface IRobotController
     {
         bool Initialize();
 
