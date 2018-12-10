@@ -3,7 +3,7 @@
     public enum PlayMode
     {
        Once,
-       SpecifiedRepeat,
+       NumberOfTimes,
        Infinite
     }
 }

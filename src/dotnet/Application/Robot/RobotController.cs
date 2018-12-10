@@ -13,18 +13,20 @@ namespace Application.Robot
         private readonly IInstructionsRepository _instructionsRepository;
         private readonly IRobot _robot;
 
-        private IInstructions _instructions;
-
-        public RobotController(ICommunicationService communicationService, 
-                            IInstructionsRepository instructionsRepository,
-                            IRobot robot)
-        {   
+        public RobotController(ICommunicationService communicationService,
+                           IInstructionsRepository instructionsRepository,
+                           IRobot robot)
+        {
             _communicationService = communicationService ?? throw new ArgumentNullException(nameof(communicationService));
             _instructionsRepository = instructionsRepository ?? throw new ArgumentNullException(nameof(instructionsRepository));
             _robot = robot ?? throw new ArgumentNullException(nameof(robot));
         }
 
-        public bool Initialize() => _communicationService.Connect();
+        private IInstructions _instructions;
+
+        private bool _isInitialized;
+
+        public bool Initialize() => _isInitialized = _communicationService.Connect();
 
         public bool LoadInstructions(string name)
         {
@@ -35,7 +37,23 @@ namespace Application.Robot
 
         public void PlayInstructions(PlayMode playMode, int numberOfTimes = 0)
         {
-            throw new NotImplementedException();
+            if(!_isInitialized)
+                throw new InvalidOperationException("Can not play without initializing robot controller.");
+
+            if (_instructions == null)
+                throw new InvalidOperationException("Can not play without instructions.");
+
+            if(playMode.Equals(PlayMode.NumberOfTimes) && numberOfTimes == 0)
+                throw new InvalidOperationException("Please provide the number of times.");
+
+            var repeatNumber = playMode.Equals(PlayMode.NumberOfTimes) ? numberOfTimes : 1;
+            for(int i = 0; i < repeatNumber; i++)
+            {
+                foreach (var instruction in _instructions.Lines)
+                {
+                    _communicationService.SendData(instruction);
+                }
+            }
         }
 
         //public void MoveServo(int servoId, int angle)
