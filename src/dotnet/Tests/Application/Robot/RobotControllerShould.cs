@@ -89,5 +89,14 @@ namespace Tests.Application.Robot.Services
             robotController.LoadInstructions("TEST01").Should().BeTrue();
             _mockInstructionsRepository.Verify(x => x.GetByName(It.IsAny<string>()), Times.Once);
         }
+
+        [Fact]
+        public void PlayInstructionsOnce()
+        {
+            var robotController = new RobotController(_mockCommunicationService.Object,
+                                _mockInstructionsRepository.Object,
+                                _robot);
+            robotController.LoadInstructions("TEST01");
+        }
     }
 }

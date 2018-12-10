@@ -1,4 +1,6 @@
-﻿namespace Domain.Robot.Contracts
+﻿using Domain.Robot.Entities;
+
+namespace Domain.Robot.Contracts
 {
     public interface IRobotController
     {
@@ -6,6 +8,6 @@
 
         bool LoadInstructions(string name);
 
-        //void MoveServo(int servoId, int angle);
+        void PlayInstructions(PlayMode playMode, int numberOfTimes = 0);
     }
 }

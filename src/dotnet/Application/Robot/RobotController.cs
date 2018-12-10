@@ -3,6 +3,7 @@ using Domain.Communication.Contracts;
 using Domain.Instructions.Contracts;
 using Domain.Program.Contracts;
 using Domain.Robot.Contracts;
+using Domain.Robot.Entities;
 
 namespace Application.Robot
 {
@@ -30,6 +31,11 @@ namespace Application.Robot
             _instructions = _instructionsRepository.GetByName(name);
 
             return _instructions != null;
+        }
+
+        public void PlayInstructions(PlayMode playMode, int numberOfTimes = 0)
+        {
+            throw new NotImplementedException();
         }
 
         //public void MoveServo(int servoId, int angle)
