@@ -1,6 +1,5 @@
 before_build:
- - nuget restore src/dotnet/RobotArmController.sln
- - choco install opencover.portable
+ - nuget restore src/dotnet/RobotArmController.sln 
  - choco install codecov
  - choco install msbuild-sonarqube-runner
 build_script:
