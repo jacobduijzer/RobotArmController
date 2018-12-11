@@ -50,8 +50,8 @@ namespace TestConsole
                                                         instructionsRepository,
                                                         robot);
 
+            robotService.Initialize();
             robotService.LoadInstructions("test01.gcode");
-            robotController.Initialize();
             //robot.MoveServo(baseServo.ServoId, baseServo.MaximumAngle);
 
             //await Task.Delay(1000);
