@@ -11,7 +11,7 @@ build_script:
 test_script:
  - codecov -f "src/dotnet/Tests/coverage.xml"
 
- environment:
+environment:
   SONARTOKEN:
     secure: Qdzz5xxO26cyIz0DOpjtS6JYEvPuIaHUAUbwZF/lMe16LSHXwnE/31nVz0FiRrPo
  
