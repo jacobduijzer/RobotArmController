@@ -33,7 +33,7 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.xml'
 
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+# Upload coverage to codecov.io
+- script: |
+    %USERPROFILE%\.nuget\packages\codecov\1.1.0\tools\codecov.exe -f "./dotnet/Tests/coverage.xml" -t $(CODECOV_TOKEN)
+    displayName: Upload coverage to codecov.io
